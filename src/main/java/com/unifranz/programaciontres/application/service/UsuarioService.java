@@ -9,5 +9,6 @@ public interface UsuarioService {
     List<UsuarioDto> listar();
     List<UsuarioDto> listarActivos();
     UsuarioDto guardarAdmin (UsuarioDto usuarioDto);
+    UsuarioDto editar(Long id, UsuarioDto usuarioDto);
     void eliminarUsuarioLogico(Long id);
 }

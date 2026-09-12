@@ -5,6 +5,7 @@ import com.unifranz.programaciontres.application.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -35,5 +36,16 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDto> guardarAdmin (@RequestBody UsuarioDto usuarioDto){
         UsuarioDto usuario = usuarioService.guardarAdmin(usuarioDto);
         return ResponseEntity.ok(usuario);
-       }
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar(@PathVariable Long id, @RequestBody UsuarioDto usuarioDto) {
+        try {
+            UsuarioDto usuario = usuarioService.editar(id, usuarioDto);
+            return ResponseEntity.ok(usuario);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

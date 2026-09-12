@@ -55,4 +55,19 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setEliminado(true);
         usuarioRepository.save(usuario);
     }
+    @Override
+    public UsuarioDto editar(Long id, UsuarioDto usuarioDto) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
+
+        if (Boolean.TRUE.equals(usuario.getEliminado())) {
+            throw new IllegalStateException("No se puede editar un usuario eliminado");
+        }
+
+        usuario.setNombre(usuarioDto.getNombre());
+        usuario.setEmail(usuarioDto.getEmail());
+
+        Usuario actualizado = usuarioRepository.save(usuario);
+        return new UsuarioDto(actualizado);
+    }
 }
