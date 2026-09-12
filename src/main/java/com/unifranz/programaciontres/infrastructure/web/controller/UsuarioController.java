@@ -48,7 +48,7 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-}
+
     @DeleteMapping("/{id}/eliminar")
     public ResponseEntity<?> eliminarUsuario(@PathVariable Long id) {
         try {
