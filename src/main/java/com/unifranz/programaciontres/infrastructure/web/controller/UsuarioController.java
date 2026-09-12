@@ -35,5 +35,14 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDto> guardarAdmin (@RequestBody UsuarioDto usuarioDto){
         UsuarioDto usuario = usuarioService.guardarAdmin(usuarioDto);
         return ResponseEntity.ok(usuario);
-       }
+    }
+    @DeleteMapping("/{id}/eliminar")
+    public ResponseEntity<?> eliminarUsuario(@PathVariable Long id) {
+        try {
+            usuarioService.eliminarUsuarioLogico(id);
+            return ResponseEntity.ok().body("{\"mensaje\": \"Usuario marcado como eliminado correctamente\"}");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
+        }
+    }
 }
